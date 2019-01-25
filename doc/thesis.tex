@@ -45,8 +45,7 @@
 % included with the "\includegraphics" command: PNG, PDF, JPEG, TIFF
 % Tip 1: Generate your figures and photos in the size you want them to appear
 % in your thesis, rather than scaling them with \includegraphics options.
-% Tip 2: Any drawings you do should be in scalable vector graphic formats:
-% SVG, PNG, WMF, EPS and then converted to PNG or PDF, so they are scalable in
+% Tip 2: Any drawings you do should be in scalable vector graphic formats: SVG, PNG, WMF, EPS and then converted to PNG or PDF, so they are scalable in
 % the final PDF as well.
 % Tip 3: Photographs should be cropped and compressed so as not to be too large.
 
@@ -204,51 +203,37 @@ description={Random vector: a location in n-dimensional Cartesian space, where e
  
 \makeglossaries
 
-%======================================================================
-%   L O G I C A L    D O C U M E N T -- the content of your thesis
-%======================================================================
 \begin{document}
 
-% For a large document, it is a good idea to divide your thesis
-% into several files, each one containing one chapter.
-% To illustrate this idea, the "front pages" (i.e., title page,
-% declaration, borrowers' page, abstract, acknowledgements,
-% dedication, table of contents, list of tables, list of figures,
-% nomenclature) are contained within the file "uw-ethesis-frontpgs.tex" which is
-% included into the document by the following statement.
-%----------------------------------------------------------------------
-% FRONT MATERIAL
-%----------------------------------------------------------------------
+%---------------------------
+% front matter
+%---------------------------
 \input{frontmatter} 
 
-%----------------------------------------------------------------------
-% MAIN BODY
-%----------------------------------------------------------------------
-% Because this is a short document, and to reduce the number of files
-% needed for this template, the chapters are not separate
-% documents as suggested above, but you get the idea. If they were
-% separate documents, they would each start with the \chapter command, i.e, 
-% do not contain \documentclass or \begin{document} and \end{document} commands.
-%======================================================================
+%---------------------------
+% main body
+%---------------------------
+%===========================
 \chapter*{Introduction}
 \input{intro}
-%======================================================================
+%===========================
 
-
-%----------------------------------------------------------------------
+%===========================
+\chapter{Untitled}
+\input{ch1}
+%---------------------------
 % END MATERIAL
-%----------------------------------------------------------------------
+%---------------------------
 
 % B I B L I O G R A P H Y
-% -----------------------
+% --------------------------
 
 % The following statement selects the style to use for references.  It controls the sort order of the entries in the bibliography and also the formatting for the in-text labels.
 \bibliographystyle{plain}
 % This specifies the location of the file containing the bibliographic information.  
 % It assumes you're using BibTeX (if not, why not?).
-\cleardoublepage % This is needed if the book class is used, to place the anchor in the correct page,
-                 % because the bibliography will start on its own page.
-                 % Use \clearpage instead if the document class uses the "oneside" argument
+\cleardoublepage % This is needed if the book class is used, to place the anchor in the correct page, because the bibliography will start on its own page. Use \clearpage instead if the document class uses the "oneside" argument
+
 \phantomsection  % With hyperref package, enables hyperlinking from the table of contents to bibliography             
 % The following statement causes the title "References" to be used for the bibliography section:
 \renewcommand*{\bibname}{References}
@@ -257,11 +242,7 @@ description={Random vector: a location in n-dimensional Cartesian space, where e
 \addcontentsline{toc}{chapter}{\textbf{References}}
 
 \bibliography{thesis}
-% Tip 5: You can create multiple .bib files to organize your references. 
-% Just list them all in the \bibliogaphy command, separated by commas (no spaces).
-
-% The following statement causes the specified references to be added to the bibliography% even if they were not 
-% cited in the text. The asterisk is a wildcard that causes all entries in the bibliographic database to be included (optional).
+% The following statement causes the specified references to be added to the bibliography% even if they were not cited in the text. The asterisk is a wildcard that causes all entries in the bibliographic database to be included (optional).
 \nocite{*}
 
 % The \appendix statement indicates the beginning of the appendices.
@@ -269,32 +250,7 @@ description={Random vector: a location in n-dimensional Cartesian space, where e
 % Add a title page before the appendices and a line in the Table of Contents
 \chapter*{APPENDICES}
 \addcontentsline{toc}{chapter}{APPENDICES}
+\input{appendix}
 %======================================================================
-\chapter[PDF Plots From Matlab]{Matlab Code for Making a PDF Plot}
-\label{AppendixA}
-% Tip 4: Example of how to get a shorter chapter title for the Table of Contents 
-%======================================================================
-\section{Using the GUI}
-Properties of Matab plots can be adjusted from the plot window via a graphical interface. Under the Desktop menu in the Figure window, select the Property Editor. You may also want to check the Plot Browser and Figure Palette for more tools. To adjust properties of the axes, look under the Edit menu and select Axes Properties.
-
-To set the figure size and to save as PDF or other file formats, click the Export Setup button in the figure Property Editor.
-
-\section{From the Command Line} 
-All figure properties can also be manipulated from the command line. Here's an example: 
-\begin{verbatim}
-x=[0:0.1:pi];
-hold on % Plot multiple traces on one figure
-plot(x,sin(x))
-plot(x,cos(x),'--r')
-plot(x,tan(x),'.-g')
-title('Some Trig Functions Over 0 to \pi') % Note LaTeX markup!
-legend('{\it sin}(x)','{\it cos}(x)','{\it tan}(x)')
-hold off
-set(gca,'Ylim',[-3 3]) % Adjust Y limits of "current axes"
-set(gcf,'Units','inches') % Set figure size units of "current figure"
-set(gcf,'Position',[0,0,6,4]) % Set figure width (6 in.) and height (4 in.)
-cd n:\thesis\plots % Select where to save
-print -dpdf plot.pdf % Save as PDF
-\end{verbatim}
 
 \end{document}
