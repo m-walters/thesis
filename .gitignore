@@ -1,0 +1,5 @@
+papers/
+/doc/thesis.*
+!/doc/thesis.tex
+!/doc/thesis.bib
+!/doc/thesis.pdf
