@@ -15,6 +15,7 @@ We emphasize the last point because it's believed this is the root cause of the 
 
 
 \section{PCA detection of defects}
+\subsection{Principal Component Analysis}
 In this section we explore Principal Component Analysis (PCA) as a technique for detecting defect regions. PCA is a useful statistical method for transforming a dataset into a form that better distinguishes features in the data, and it may also be used as a dimension reduction tool on a dataset. It also falls into the category of unsupervised learning since it reveals features in the data without any label-directed goals. PCA is well-known, and we'll follow the explanation offered by Johnathan Shlens \cite{shlens2014pca}.
 
 We let the $m\times n$ matrix $\bv{X}$ represent our dataset of $m$ observations on $n$ dimensions. The goal of PCA is to find the matrix $\bv{W}$ that \textit{best} transforms our dataset to a new set of orthogonal axes, or ``principal components'':
@@ -53,22 +54,75 @@ We can verify that our conditions are met:
 	\item $\bv{W}$ indeed diagonalizes $\bv{C_Y}$.
 \end{itemize}
 
-
+\subsection{PCA learning order parameters for phase transitions}
 Recently, PCA has seen some fascinating use on condensed matter systems. In 2016, L.\ Wang (Ref.\ \cite{wang2016ising}), with a dataset of simulated Ising spin systems (each observation was an instance of a system and each spin location was a feature dimension of $\bv{X}$), PCA could locate phase transitions in both the standard Ising model, but also the conserved order parameter (COP) Ising model. In the standard model, reduction showed that only the first PCA component was significant for capturing the distinguishing information of the system. Indeed, the corresponding eigenvector $\bv{w_1}$ was simply a constant function, meaning that it was in fact the magnetization order parameter, and cluster analysis of the data along this component (although it was also visually evident) showed two clusters corresponding to the high and low temperature states. The author took things a step further with the COP model because each system had a net-zero magnetization, so the magnetization order parameter would not suffice and PCA would need to find other indicators of the phase transition. Championing this restriction, PCA found that four components were all that was necessary and together could form the structure factor indicative of the phase transition.
 
 In 2018, authors R.B.\ Jadrich \textit{et al.}\ (Ref.\ \cite{jadrich2018offlattice}) applied PCA to detect phase transitions of multiple off-lattice systems, including the fluid-nematic transition of a liquid crystal system much like the one of focus here (although with ellipsoid molecules as opposed to rod-like). Their methods were similar to those just described, but instead of each observation being a whole system, they were smaller local samples centered on random probe molecules (e.g.\ the orientations of 20 nearest neighbours). Additionally, the off-lattice nature carried with it some ambiguity as to the structuring/ordering of the nearest neighbours that formed $\bv{X}$ dimensions. Using an intuitive distance-to-probe ordering, they found again only the first PCA component was needed to learn the transition, and that it modeled the classical order parameter used to locate the transition.
 
 What is crucial to note here, and what is so exceptional about this method, is that, apart from the raw particle information (location, spin, orientation, etc.), it requires no additional information about each system such as Hamiltonians or interaction potentials. On top of this, PCA does not cluster observations in some black-box style, but discovers the precise order parameters that are classically used to indicate the phase change.
 
-We now put forth the question: Can PCA use nearest neighbour information of our LC system to identify nematic and defect states, or beyond that which \textit{type} of defect?
+\subsection{PCA learning disclinations}
+We now put forth the question: Can PCA use nearest neighbour information of our LC system to identify nematic vs.\ disclination/defect states of the variety shown in Fig, or beyond that which \textit{type} of defect?
 The following discusses this question, with results on the endeavor presented in Sec.\ \ref{Results}.
 
 The results of Ref.\ \cite{jadrich2018offlattice} are certainly encouraging, though their objective was somewhat different. PCA detected a long-range angular correlation appeared signaling the nematic phase, and for this they used every \nth{10} nearest neighbour. Here we are concerned with detailed local features. In theory, the nematic vs.\ non-nematic states should be differentiable. For a given probe $i$ (either a rod or a point in space), we may construct a feature vector $f_i = [x_1^{(i)},x_2^{(i)},\cdots,x_{nn}^{(i)}]$ of some physical quantity $x$. Rod orientation relative to the probe rod $\theta_{ij}$ or, to account for the rod symmetry, the transformed $\cos(2\theta_{ij})$ may be sufficient, but the probe rod orientation is highly variable within a characteristic defect orientation, so defects may appear significantly different in their feature vectors. A counter to this would to take neighbouring rod orientations with respect to a local nematic director $\alpha$ isntead. 
 
-A random ordering of neighbours may work in detecting nematic vs.\ defect states, but would not be expected to work for the more detailed defect type detection. In a perfectly aligned sample, a maximal $\theta_{\alpha j}$ or frequency of certain angles may signal a defect type, but the Monte Carlo defect samples would have too much overlap/similarity for a randomly ordered feature vector. Thus, in the same way that humans visually identify winding number, a feature vector that is ordered by a clockwise procession around the defect center should be a more effective approach.
+A random ordering of neighbours may work in detecting nematic vs.\ defect states, but would not be expected to work for the more detailed defect type detection. In a perfectly shaped defect, a maximal $\theta_{\alpha j}$ or frequency of certain angles may signal a defect type, but the Monte Carlo defect samples would have too much overlap/similarity for a randomly ordered feature vector. Thus, in the same way that humans visually identify winding numbers, a feature vector that is ordered by a clockwise procession around the defect center should be a more effective approach.
+
+
+
+\begin{figure*}[!t]
+	\centering
+	\begin{minipage}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=0.9\columnwidth]{./figs/minusone_reruns_0_alt.eps}\\
+		(a)\\ \vspace{0.5cm}
+		\includegraphics[width=0.9\columnwidth]{./figs/minusone_reruns_1_alt.eps}\\
+		(e)
+	\end{minipage}%
+	\begin{minipage}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=0.9\columnwidth]{./figs/minushalf_reruns_0.eps}\\
+		(b)\\ \vspace{0.5cm}
+		\includegraphics[width=0.9\columnwidth]{./figs/minushalf_reruns_1.eps}\\
+		(f)
+	\end{minipage}%
+	\begin{minipage}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=0.9\columnwidth]{./figs/plushalf_reruns_0.eps}\\
+		(c)\\ \vspace{0.5cm}
+		\includegraphics[width=0.9\columnwidth]{./figs/plushalf_reruns_1.eps}\\
+		(g)
+	\end{minipage}%
+	\begin{minipage}[t]{0.25\textwidth}
+		\centering
+		\includegraphics[width=0.9\columnwidth]{./figs/plusone_reruns_0.eps}\\
+		(d)\\ \vspace{0.5cm}
+		\includegraphics[width=0.9\columnwidth]{./figs/plusone_reruns_1.eps}\\
+		(h)
+	\end{minipage}%
+	\caption{(a)-(d) Examples of initialized disclinations with winding numbers $-1$, $-1/2$, $+1/2$, and $+1$ respectively, as a visual aid for understanding the procession around the defect center. In proceeding clockwise around a defect, winding polarity indicates the direction of rotation about the rod axis, and magnitude indicates how many rotations about this axis. Coloured dots are included as a visual aid. (e)-(h) Below, uncrossed samples of the above disclinations. Such uncrossed samples made up the defect PCA dataset.
+	}
+	\label{FIG:defects_pure}
+\end{figure*}
 
 
 
 
-
+\begin{figure*}[!t]
+	\centering
+	\begin{minipage}[c]{\columnwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{./figs/prob_stats_minusone_small_0.eps}\\
+		\vspace{0.5cm}
+		\includegraphics[width=\columnwidth]{./figs/prob_stats_minushalf_small_0.eps}\\
+		\vspace{0.5cm}
+		\includegraphics[width=\columnwidth]{./figs/prob_stats_plushalf_small_0.eps}\\
+		\vspace{0.5cm}
+		\includegraphics[width=\columnwidth]{./figs/prob_stats_plusone_small_0.eps}
+	\end{minipage}%
+	\caption{(a)-(d) Examples of initialized disclinations with winding numbers $-1$, $-1/2$, $+1/2$, and $+1$ respectively, as a visual aid for understanding the procession around the defect center. In proceeding clockwise around a defect, winding polarity indicates the direction of rotation about the rod axis, and magnitude indicates how many rotations about this axis. Coloured dots are included as a visual aid. (e)-(h) Below, uncrossed samples of the above disclinations. Such uncrossed samples made up the defect PCA dataset.
+	}
+	\label{FIG:prob_samples}
+\end{figure*}
 
