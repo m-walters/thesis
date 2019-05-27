@@ -106,23 +106,28 @@ A random ordering of neighbours may work in detecting nematic vs.\ defect states
 	\label{FIG:defects_pure}
 \end{figure*}
 
+We adopt an approach where we first identify a nematic director $\alpha$ from neighbours. We use a discretized version of the method outlined in Section \ref{Order param} that produces the $Q$-matrix in equation \ref{eq:Qmat}:
+\begin{align*}
+	Q_{nn} = \frac{1}{2}\left(
+	\begin{matrix}
+	S_{nn}(x,y) & T_{nn}(x,y)\\
+	T_{nn}(x,y) & -S_{nn}(x,y).
+	\end{matrix}
+	\right)
+\end{align*}
+where $S_{nn}$ and $T_{nn}$ are averaged over neighbours,
+\begin{align*}
+	S_{nn} &= \frac{1}{N_{nn}}\sum_i \cos(2\theta_i)\\
+	T_{nn} &= \frac{1}{N_{nn}}\sum_i \sin(2\theta_i)
+\end{align*} 
 
 
 
-\begin{figure*}[!t]
-	\centering
-	\begin{minipage}[c]{\columnwidth}
-		\centering
-		\includegraphics[width=\columnwidth]{./figs/prob_stats_minusone_small_0.eps}\\
-		\vspace{0.5cm}
-		\includegraphics[width=\columnwidth]{./figs/prob_stats_minushalf_small_0.eps}\\
-		\vspace{0.5cm}
-		\includegraphics[width=\columnwidth]{./figs/prob_stats_plushalf_small_0.eps}\\
-		\vspace{0.5cm}
-		\includegraphics[width=\columnwidth]{./figs/prob_stats_plusone_small_0.eps}
-	\end{minipage}%
-	\caption{(a)-(d) Examples of initialized disclinations with winding numbers $-1$, $-1/2$, $+1/2$, and $+1$ respectively, as a visual aid for understanding the procession around the defect center. In proceeding clockwise around a defect, winding polarity indicates the direction of rotation about the rod axis, and magnitude indicates how many rotations about this axis. Coloured dots are included as a visual aid. (e)-(h) Below, uncrossed samples of the above disclinations. Such uncrossed samples made up the defect PCA dataset.
-	}
-	\label{FIG:prob_samples}
-\end{figure*}
+
+
+
+
+
+
+
 
