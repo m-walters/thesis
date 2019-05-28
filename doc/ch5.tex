@@ -445,7 +445,13 @@ The cost function $S$ and test set accuracy $A$ are shown in Fig.~\ref{MNIST} by
 
 \vfill
 
+
+
 \section{PCA}
+
+
+
+
 
 \begin{figure*}[!t]
 	\centering
@@ -509,6 +515,53 @@ for neighbour $n_i$ and random phase $\phi$ since in practice
 }
 \label{FIG:prob_samples2}
 \end{figure*}
+
+
+
+
+\textbf{DISCUSS} Go into the topic surrounding the difficulty of avoiding false rotations. This seems to be the main problem with using just th\_jalpha information (polar2) as opposed to our best mode of cos(2*th\_jalpha) (polar). Heat map images show that polar2 can be very sketchy (along w0 at least). File \texttt{edge\_3\_11.47} nblskip 1, px,py = 15,15 and px,py = 15,16 provide two good examples of how different things can be.
+
+Let's map out this discussion on methods.
+Three modes to consider: random, winding alignment ``WA'' (polar), winding difference ``WD'' (polar2).
+I think we will need a suite of plots here: 
+\begin{itemize}
+	\item scatter plots of $w_1/w_2$ probably don't need to go to higher comparisons, except it may be interesting on the WA plot
+	\item The eigenvalue and vector plots
+	\item Probe plots
+	\begin{itemize}
+		\item smalldefects with all three modes. These could maybe be combined across modes. Otherwise it may feel like relegating to appendix, however random mode colors the rods differently.
+		\item iso-nem for WA at least. Does WD capture this? Looks like no. Especially near the phase transition where some skew rods will really throw things off and produce false rotations. It performs fine in nematic regions.
+		I just looked at the X-state with WD and 0,1,2, dimensions and it hardly responds to different regions, and also flipflops near the center. false rotations causing issues no doubt.
+	\end{itemize}
+	\item Many heat map plots
+	\begin{itemize}
+		\item possibly some of the smalldefects in random mode
+		\item run edge\_3\_11.47 showing how WD and WA behave differently
+		\item some XTUD images. We should do higher order colouring here. For example, the 3rd vs 2nd dimension colouring should be interesting, though 2nd will colour over 3rd. See note above wrt WD and X-state
+		\item Heat maps of smalldefects for WA and WD probably overkill
+	\end{itemize}
+	\item 
+\end{itemize}
+
+
+\begin{figure*}[!t]
+	\centering
+	\begin{minipage}[c]{\columnwidth}
+		\centering
+		\includegraphics[width=\columnwidth]{./figs/prob_stats_polar2_a.eps}\\
+		\vspace{0.5cm}
+		\includegraphics[width=\columnwidth]{./figs/prob_stats_polar2_b.eps}
+	\end{minipage}%
+	\caption{Feature vectors (middle column) and their modified PCA components (right column) for $+1/2$ (a) and $+1$ (b) winding numbers. The $+1/2$ defect shows a high response in the \nth{2} component, with the $+1$ defect giving a high response in the \nth{3} component. Both are still highly nematic and give a strong \nth{1} component response.
+	}
+	\label{FIG:prob_polar2}
+\end{figure*}
+
+
+
+
+
+
 
 
 
