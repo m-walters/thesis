@@ -1,2 +1,4 @@
 # thesis
-doc/thesis.pdf is where to look. I'm still writing this though, so it contains my notes and whatever other imperfections.
+
+I have uploaded the final version of my thesis as `final_July_15_2019.pdf`.  
+The files in `docs/` are severely outdated. The actual tex files and such must be on my other computer :)
